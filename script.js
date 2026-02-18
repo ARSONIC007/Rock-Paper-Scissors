@@ -1,51 +1,79 @@
-let getComputerChoice;
-
-let rNum = Number(Math.random().toFixed(3));
-
-0 <= rNum && rNum <= 0.333
-  ? (getComputerChoice = "Rock")
-  : 0.334 <= rNum && rNum <= 0.666
-    ? (getComputerChoice = "Paper")
-    : 0.667 <= rNum && rNum <= 0.999
-      ? (getComputerChoice = "Scissor")
-      : console.log("Error");
-
-let getHumanChoice = prompt("Enter Your Choice", `Rock or Paper or Scissor`);
-
 function playGame() {
   let humanScore = 0;
   let computerScore = 0;
 
+  function getComputerChoice() {
+    let rNum = Math.random();
+    if (rNum <= 0.333) return "Rock";
+    else if (rNum <= 0.666) return "Paper";
+    else return "Scissor";
+  }
+
+  function getHumanChoice() {
+    return prompt("Enter Your Choice: Rock, Paper or Scissor");
+  }
+
   function playRound(humanChoice, computerChoice) {
-    // make input case-insensitive
     humanChoice = humanChoice.toLowerCase();
     computerChoice = computerChoice.toLowerCase();
 
-    // draw
     if (humanChoice === computerChoice) {
       console.log("It's a Draw!");
-      return;
+      return "Draw";
     }
 
-    // human win conditions
     if (
       (humanChoice === "rock" && computerChoice === "scissor") ||
       (humanChoice === "paper" && computerChoice === "rock") ||
       (humanChoice === "scissor" && computerChoice === "paper")
     ) {
       console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-      humanScore++;
+      return "Human";
     } else {
       console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-      computerScore++;
+      return "Computer";
     }
   }
-  const humanSelection = getHumanChoice;
-  const computerSelection = getComputerChoice;
 
-  playRound(humanSelection, computerSelection);
+  // -------- 5 ROUNDS --------
 
+  // Round 1
+  let result = playRound(getHumanChoice(), getComputerChoice());
+  if (result === "Human") humanScore++;
+  else if (result === "Computer") computerScore++;
+
+  // Round 2
+  result = playRound(getHumanChoice(), getComputerChoice());
+  if (result === "Human") humanScore++;
+  else if (result === "Computer") computerScore++;
+
+  // Round 3
+  result = playRound(getHumanChoice(), getComputerChoice());
+  if (result === "Human") humanScore++;
+  else if (result === "Computer") computerScore++;
+
+  // Round 4
+  result = playRound(getHumanChoice(), getComputerChoice());
+  if (result === "Human") humanScore++;
+  else if (result === "Computer") computerScore++;
+
+  // Round 5
+  result = playRound(getHumanChoice(), getComputerChoice());
+  if (result === "Human") humanScore++;
+  else if (result === "Computer") computerScore++;
+
+  // -------- FINAL RESULT --------
   console.log(
-    `Human score is ${humanScore} & ComputerScore is ${computerScore}`,
+    `Final Score -> Human: ${humanScore} | Computer: ${computerScore}`,
   );
+
+  if (humanScore > computerScore) {
+    console.log("🎉 You won the game!");
+  } else if (computerScore > humanScore) {
+    console.log("💻 Computer won the game!");
+  } else {
+    console.log("🤝 The game is a draw!");
+  }
 }
+
+playGame();
